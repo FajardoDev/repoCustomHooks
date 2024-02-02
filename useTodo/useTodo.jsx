@@ -1,18 +1,31 @@
-import { useEffect, useReducer, useState } from "react";
-import { todoReducer } from "../todoReducer";
+import {
+	useEffect,
+	useReducer,
+	useState,
+} from "react";
+import { todoReducer } from "./todoReducer";
 
 const estadoInicial = [];
 
 const initStorage = () => {
-	return JSON.parse(localStorage.getItem("todos")) || [];
+	return (
+		JSON.parse(localStorage.getItem("todos")) || []
+	);
 };
 
 export const useTodo = () => {
-	const [todos, dispatch] = useReducer(todoReducer, estadoInicial, initStorage);
+	const [todos, dispatch] = useReducer(
+		todoReducer,
+		estadoInicial,
+		initStorage,
+	);
 	const [editTodo, setEditTodo] = useState({});
 
 	useEffect(() => {
-		localStorage.setItem("todos", JSON.stringify(todos));
+		localStorage.setItem(
+			"todos",
+			JSON.stringify(todos),
+		);
 	}, [todos]);
 
 	const handleNewTodo = (todo) => {
@@ -26,7 +39,9 @@ export const useTodo = () => {
 
 	const handleDeleteTodo = (id) => {
 		// console.log(id);
-		const resultado = confirm("Desea eliminar la tarea?");
+		const resultado = confirm(
+			"Desea eliminar la tarea?",
+		);
 
 		if (resultado) {
 			dispatch({
@@ -56,7 +71,9 @@ export const useTodo = () => {
 
 	// "[TODO] edit Todo"
 
-	const cantidad = todos.filter((todo) => todo.done).length;
+	const cantidad = todos.filter(
+		(todo) => todo.done,
+	).length;
 	const pendiente = todos.length - cantidad;
 
 	return {
